@@ -69,6 +69,27 @@ Describe 'Persona definitions' {
         $Admin = Import-PowerShellDataFile -Path (Join-Path $RepoRoot 'Config/Personas/PrivilegedAdmin.psd1')
         $Admin.Controls.RequireLAPS | Should -Be $true
     }
+
+    It 'Every extended persona (non-core-3) declares a valid BaseArchetype' {
+        $CoreArchetypes = @('StandardUser', 'PrivilegedAdmin', 'KioskSharedDevice')
+        $ExtendedPersonaFiles = $PersonaFiles | Where-Object { $_.BaseName -notin $CoreArchetypes }
+        foreach ($File in $ExtendedPersonaFiles) {
+            $Persona = Import-PowerShellDataFile -Path $File.FullName
+            $Persona.BaseArchetype | Should -BeIn $CoreArchetypes -Because "$($File.Name) must declare which core archetype it extends"
+        }
+    }
+
+    It 'CallCenterAgent and Finance enforce WDAC given their fixed/predictable app sets' {
+        $CallCenter = Import-PowerShellDataFile -Path (Join-Path $RepoRoot 'Config/Personas/CallCenterAgent.psd1')
+        $Finance = Import-PowerShellDataFile -Path (Join-Path $RepoRoot 'Config/Personas/Finance.psd1')
+        $CallCenter.Controls.WDACEnforced | Should -Be $true
+        $Finance.Controls.WDACEnforced | Should -Be $true
+    }
+
+    It 'Developer keeps WDAC in audit (not enforced) given dev tooling variability' {
+        $Dev = Import-PowerShellDataFile -Path (Join-Path $RepoRoot 'Config/Personas/Developer.psd1')
+        $Dev.Controls.WDACEnforced | Should -Be $false
+    }
 }
 
 Describe 'Remediation script safety conventions' {

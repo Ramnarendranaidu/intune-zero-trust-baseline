@@ -28,7 +28,10 @@ param(
     [string]$PolicyId,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet('StandardUser', 'PrivilegedAdmin', 'KioskSharedDevice')]
+    [ValidateSet(
+        'StandardUser', 'PrivilegedAdmin', 'KioskSharedDevice',
+        'Developer', 'CallCenterAgent', 'ServiceDesk', 'Finance', 'Marketing'
+    )]
     [string]$PersonaName
 )
 

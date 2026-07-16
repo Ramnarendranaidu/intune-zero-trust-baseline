@@ -27,15 +27,21 @@ scope ends and your compliance tooling's scope begins.
 ```
 docs/
   CIS-Mapping.md              — the source of truth: every control, its CIS area, tier, and persona
-  Personas.md                 — why these three personas, and how to add a fourth
+  Personas.md                 — why these three archetypes, and how to add a fourth
+  Personas-Extended.md         — Developer, Call Center Agent, Service Desk, Finance, Marketing — each mapped back to a core archetype
   Rollout-Strategy.md          — how to deploy this without breaking anything
   Reporting-Options.md         — Intune reports vs Power BI vs Log Analytics vs CIS-CAT, honestly compared
   VSCode-ClaudeCode-Integration.md — how to actually run this from your dev environment
 
 Config/Personas/
-  StandardUser.psd1            — knowledge workers, no local admin, Broad ring
+  StandardUser.psd1            — knowledge workers / general users, no local admin, Broad ring
   PrivilegedAdmin.psd1          — elevated access, Test ring, IS the L2 pilot
   KioskSharedDevice.psd1        — shared/unattended, Fast ring, tightest device lockdown
+  Developer.psd1                — dev tooling flexibility, JIT elevation, WDAC audit-only
+  CallCenterAgent.psd1          — fixed CRM/softphone app set, PCI-adjacent controls, Fast ring
+  ServiceDesk.psd1              — scoped JIT elevation for support tooling, First ring
+  Finance.psd1                  — accelerated L2 adoption given fraud-targeting risk
+  Marketing.psd1                 — Standard User baseline with SaaS/media-transfer carve-outs
 
 Policies/
   L1/                          — safe for fleet-wide rollout
