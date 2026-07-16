@@ -1,0 +1,52 @@
+{
+  "_metadata": {
+    "name": "L2 - Attack Surface Reduction Rules (Block Mode)",
+    "cisMapping": "Endpoint Detection, Antivirus & ASR: same rules as L1 Audit, promoted to enforced Block",
+    "tier": "L2",
+    "personas": ["PrivilegedAdmin", "KioskSharedDevice"],
+    "assignmentNote": "Deploy to PrivilegedAdmin (Test ring) first. Only extend to StandardUser after a 2-4 week audit-mode validation window (Policies/L1/ASR-AuditMode.json) shows zero legitimate-workflow hits across the fleet.",
+    "rollback": "Delete/disable profile immediately reverts to Audit mode enforcement (or no ASR if L1 profile also removed). If a specific rule breaks a workflow, add a file/folder/process exclusion rather than disabling the whole rule fleet-wide."
+  },
+  "name": "ZeroTrust-L2-ASR-BlockMode",
+  "description": "Same core ASR rule set as the L1 audit profile, promoted to Block. Only assign after audit-mode telemetry confirms no false-positive impact for the target persona.",
+  "platforms": "windows10",
+  "technologies": "mdm",
+  "templateReference": {
+    "templateId": "attack_surface_reduction_configuration"
+  },
+  "settings": [
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductionrules",
+        "groupSettingCollectionValue": [
+          {
+            "children": [
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_lsasscredentialtheft",
+                "choiceSettingValue": { "value": "block" }
+              },
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_officechildprocess",
+                "choiceSettingValue": { "value": "block" }
+              },
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_obfuscatedscripts",
+                "choiceSettingValue": { "value": "block" }
+              },
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_emailexecutablecontent",
+                "choiceSettingValue": { "value": "block" }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_policy_config_defender_enablecontrolledfolderaccess",
+        "choiceSettingValue": { "value": "device_vendor_msft_policy_config_defender_enablecontrolledfolderaccess_enable" }
+      }
+    }
+  ]
+}

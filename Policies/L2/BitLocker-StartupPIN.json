@@ -1,0 +1,32 @@
+{
+  "_metadata": {
+    "name": "L2 - BitLocker Pre-Boot Startup PIN",
+    "cisMapping": "Device Encryption: require startup PIN (pre-boot authentication)",
+    "tier": "L2",
+    "personas": ["PrivilegedAdmin"],
+    "assignmentNote": "Not applied to KioskSharedDevice — those devices need unattended boot. Not applied to StandardUser at L2 by default — pre-boot PIN is the single highest user-friction control in this repo (adds a step to every cold boot/restart) and needs explicit change-management communication before wider rollout.",
+    "impactNote": "Existing BitLocker-encrypted devices will prompt the user to set a PIN at next reboot after policy applies — this is the one control in this repo with unavoidable, visible user impact. Communicate before deploying, don't silently enable.",
+    "rollback": "Disable profile; devices stop requiring PIN at next unlock/decrypt cycle. Already-set PINs can be cleared via manage-bde or the BitLocker control panel if needed."
+  },
+  "name": "ZeroTrust-L2-BitLocker-StartupPIN",
+  "description": "Requires a pre-boot PIN for BitLocker-protected OS drives, adding defense against offline/cold-boot attacks. Highest-friction control in the baseline — admin-persona pilot only until change management is in place for wider rollout.",
+  "platforms": "windows10",
+  "technologies": "mdm",
+  "templateReference": {
+    "templateId": "disk_encryption_configuration"
+  },
+  "settings": [
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_bitlocker_systemdrivesrequirestartupauthentication",
+        "choiceSettingValue": { "value": "device_vendor_msft_bitlocker_systemdrivesrequirestartupauthentication_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_bitlocker_systemdrivesminimumpinlength",
+        "simpleSettingValue": { "value": 6 }
+      }
+    }
+  ]
+}

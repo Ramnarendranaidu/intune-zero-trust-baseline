@@ -1,0 +1,43 @@
+{
+  "_metadata": {
+    "name": "L1 - BitLocker Disk Encryption Baseline",
+    "cisMapping": "Device Encryption: OS drive + fixed data drive encryption, XTS-AES 256, deny write to unprotected removable drives",
+    "tier": "L1",
+    "personas": ["StandardUser", "PrivilegedAdmin", "KioskSharedDevice"],
+    "rollback": "Do NOT bulk-disable BitLocker to roll back — this triggers full decryption which is slow and leaves data unprotected during the window. Instead, pause the policy assignment (new devices unaffected) and handle already-encrypted devices case by case.",
+    "impactNote": "Silent/background encryption via Intune, no user-facing prompts. Devices with a TPM (virtually all managed hardware since ~2016) encrypt in the background with no measurable performance impact on modern SSDs."
+  },
+  "name": "ZeroTrust-L1-BitLocker-Baseline",
+  "description": "Silent BitLocker encryption for OS and fixed data drives at XTS-AES 256, plus deny-write to non-BitLocker-protected removable drives. No pre-boot PIN at this tier (see L2 for startup authentication).",
+  "platforms": "windows10",
+  "technologies": "mdm",
+  "templateReference": {
+    "templateId": "disk_encryption_configuration"
+  },
+  "settings": [
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_bitlocker_requiredeviceencryption",
+        "choiceSettingValue": { "value": "device_vendor_msft_bitlocker_requiredeviceencryption_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_bitlocker_encryptionmethodbydrivetype_osdriveencryptiontype",
+        "choiceSettingValue": { "value": "device_vendor_msft_bitlocker_encryptionmethodbydrivetype_osdriveencryptiontype_xtsaes256" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_bitlocker_encryptionmethodbydrivetype_fixeddriveencryptiontype",
+        "choiceSettingValue": { "value": "device_vendor_msft_bitlocker_encryptionmethodbydrivetype_fixeddriveencryptiontype_xtsaes256" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_bitlocker_removabledrive_configuredenywritetoprotect",
+        "choiceSettingValue": { "value": "device_vendor_msft_bitlocker_removabledrive_configuredenywritetoprotect_1" }
+      }
+    }
+  ]
+}

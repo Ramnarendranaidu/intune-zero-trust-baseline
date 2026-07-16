@@ -1,0 +1,48 @@
+{
+  "_metadata": {
+    "name": "L1 - Microsoft Defender Antivirus Baseline",
+    "cisMapping": "Endpoint Detection, Antivirus & ASR: real-time protection, cloud-delivered protection, PUA=Block, Tamper Protection",
+    "tier": "L1",
+    "personas": ["StandardUser", "PrivilegedAdmin", "KioskSharedDevice"],
+    "rollback": "Disable/delete this profile in Intune; devices revert to their prior Defender config within one sync cycle (no reboot required)."
+  },
+  "name": "ZeroTrust-L1-DefenderAV-Baseline",
+  "description": "Baseline Microsoft Defender Antivirus posture applied fleet-wide. Real-time protection, cloud-delivered protection, and Tamper Protection are core to any Zero Trust posture and carry effectively zero app-compat risk.",
+  "platforms": "windows10",
+  "technologies": "mdm",
+  "templateReference": {
+    "templateId": "antivirus_configuration"
+  },
+  "settings": [
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_defender_configuration_allowrealtimemonitoring",
+        "choiceSettingValue": { "value": "device_vendor_msft_defender_configuration_allowrealtimemonitoring_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_defender_configuration_allowcloudprotection",
+        "choiceSettingValue": { "value": "device_vendor_msft_defender_configuration_allowcloudprotection_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_defender_configuration_submitsamplesconsent",
+        "choiceSettingValue": { "value": "device_vendor_msft_defender_configuration_submitsamplesconsent_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_defender_configuration_puaprotection",
+        "choiceSettingValue": { "value": "device_vendor_msft_defender_configuration_puaprotection_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_defender_configuration_allowtamperprotection",
+        "choiceSettingValue": { "value": "device_vendor_msft_defender_configuration_allowtamperprotection_1" }
+      }
+    }
+  ]
+}

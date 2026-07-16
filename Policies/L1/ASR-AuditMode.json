@@ -1,0 +1,52 @@
+{
+  "_metadata": {
+    "name": "L1 - Attack Surface Reduction Rules (Audit Mode)",
+    "cisMapping": "Endpoint Detection, Antivirus & ASR: ASR rules, deployed in Audit mode first",
+    "tier": "L1",
+    "personas": ["StandardUser", "PrivilegedAdmin", "KioskSharedDevice"],
+    "rollback": "Delete/disable profile; ASR rules stop evaluating immediately, no reboot needed.",
+    "impactNote": "Audit mode logs what WOULD be blocked without actually blocking anything — this is the safe first step. Review Defender for Endpoint 'Attack surface reduction rules' report for 2-4 weeks before promoting any rule to Block mode (see Policies/L2/ASR-BlockMode.json) to confirm no legitimate business workflow trips a rule."
+  },
+  "name": "ZeroTrust-L1-ASR-AuditMode",
+  "description": "Core Attack Surface Reduction rules in Audit mode: blocks credential theft from LSASS, Office child process creation, obfuscated scripts, and executable content from email/webmail — logged only, not enforced, until validated per-persona.",
+  "platforms": "windows10",
+  "technologies": "mdm",
+  "templateReference": {
+    "templateId": "attack_surface_reduction_configuration"
+  },
+  "settings": [
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductionrules",
+        "groupSettingCollectionValue": [
+          {
+            "children": [
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_lsasscredentialtheft",
+                "choiceSettingValue": { "value": "audit" }
+              },
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_officechildprocess",
+                "choiceSettingValue": { "value": "audit" }
+              },
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_obfuscatedscripts",
+                "choiceSettingValue": { "value": "audit" }
+              },
+              {
+                "settingDefinitionId": "device_vendor_msft_policy_config_defender_attacksurfacereductiononlyexclusions_rule_emailexecutablecontent",
+                "choiceSettingValue": { "value": "audit" }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_policy_config_defender_enablenetworkprotection",
+        "choiceSettingValue": { "value": "device_vendor_msft_policy_config_defender_enablenetworkprotection_1" }
+      }
+    }
+  ]
+}

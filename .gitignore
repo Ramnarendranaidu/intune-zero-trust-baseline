@@ -1,0 +1,6 @@
+*.log
+*.tmp
+reports/*.json
+reports/*.csv
+.vscode/
+TestResults/

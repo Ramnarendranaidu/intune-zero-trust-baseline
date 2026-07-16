@@ -1,0 +1,42 @@
+{
+  "_metadata": {
+    "name": "L1 - Windows Defender Firewall Baseline",
+    "cisMapping": "Firewall & Network: all profiles enabled, default-deny inbound",
+    "tier": "L1",
+    "personas": ["StandardUser", "PrivilegedAdmin", "KioskSharedDevice"],
+    "rollback": "Disable/delete this profile; Windows Firewall returns to its previous state. Test VPN/collaboration app inbound rules in Pilot ring first — this is the single most likely L1 control to need an app-specific exception."
+  },
+  "name": "ZeroTrust-L1-Firewall-Baseline",
+  "description": "Enables Windows Defender Firewall on all three profiles (Domain/Private/Public) with default-deny inbound. Add app-specific allow rules as exceptions rather than disabling the profile.",
+  "platforms": "windows10",
+  "technologies": "mdm",
+  "templateReference": {
+    "templateId": "firewall_configuration"
+  },
+  "settings": [
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_firewall_mdmstore_domainprofile_enablefirewall",
+        "choiceSettingValue": { "value": "device_vendor_msft_firewall_mdmstore_domainprofile_enablefirewall_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_firewall_mdmstore_privateprofile_enablefirewall",
+        "choiceSettingValue": { "value": "device_vendor_msft_firewall_mdmstore_privateprofile_enablefirewall_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_firewall_mdmstore_publicprofile_enablefirewall",
+        "choiceSettingValue": { "value": "device_vendor_msft_firewall_mdmstore_publicprofile_enablefirewall_1" }
+      }
+    },
+    {
+      "settingInstance": {
+        "settingDefinitionId": "device_vendor_msft_firewall_mdmstore_domainprofile_defaultinboundaction",
+        "choiceSettingValue": { "value": "device_vendor_msft_firewall_mdmstore_domainprofile_defaultinboundaction_block" }
+      }
+    }
+  ]
+}
